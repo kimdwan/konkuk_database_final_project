@@ -1,0 +1,7 @@
+# 데이터 베이스를 추가하는 폴더에 사용되는 거
+MakeDataFile/myenv
+MakeDataFile/.env
+
+# 프론트엔드 
+AppFile/main_frontend/node_modules
+AppFile/main_frontend/src/.env
