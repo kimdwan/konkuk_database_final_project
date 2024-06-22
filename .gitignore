@@ -7,4 +7,4 @@ AppFile/main_frontend/node_modules
 AppFile/main_frontend/src/.env
 
 # 백엔드 
-AppFile/main_backend/.env
+AppFile/main_frontend/.env

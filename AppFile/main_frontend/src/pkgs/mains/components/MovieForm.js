@@ -5,7 +5,6 @@ export const MovieForm = ({setMovieDatase}) => {
 
   return (
     <div>
-      영화의 폼이 들어오는 장소 입니다.
       <form onSubmit = {handleSubmit(onSubmit)}>
         영화명: 
         <input 

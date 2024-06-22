@@ -1,0 +1,110 @@
+/* Main.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.information {
+  background-color: #fff;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.selfIntroduce, .homepageIntroduce {
+  margin-bottom: 10px;
+}
+
+.selfIntroduce {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.homepageIntroduce {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #555;
+}
+
+form {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+form input[type="text"],
+form input[type="number"] {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+form input[type="submit"] {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.movieTableContainer {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr); /* 9 columns for the 9 movie attributes */
+  gap: 10px;
+  background-color: #f4f4f9;
+  padding: 20px;
+}
+
+.movieValuesTitles, .movieValuesRow {
+  display: contents; /* Ensure grid cells align with title and data rows */
+}
+
+.movieTitle, .movieValue {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.movieTitle {
+  font-weight: bold;
+  background-color: #007BFF;
+  color: white;
+}
+
+.movieValue {
+  background-color: #e9f5ff;
+}
+
+@media (max-width: 768px) {
+  .movieTableContainer {
+    grid-template-columns: repeat(9, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .movieTableContainer {
+    grid-template-columns: repeat(9, 1fr);
+  }
+}

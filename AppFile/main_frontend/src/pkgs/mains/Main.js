@@ -1,9 +1,9 @@
-import { useState } from "react"
 import { Information, MovieData, MovieForm } from "./components"
+import { useGetInitDataHooks } from "./hooks"
 import "./statics/Main.css"
 
 export const Main = () => {
-  const [ movieDatas, setMovieDatase ] = useState([])
+  const { movieDatas, setMovieDatase } = useGetInitDataHooks()
 
   return (
     <div>
