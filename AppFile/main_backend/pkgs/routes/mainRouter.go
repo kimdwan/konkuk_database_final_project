@@ -7,5 +7,5 @@ import (
 
 func MainRouter(router *gin.Engine) {
 	mainrouter := router.Group("main")
-	mainrouter.GET("findalls", controllers.FindAllMovieDatas)
+	mainrouter.POST("findalls", controllers.FindAllMovieDatas)
 }
