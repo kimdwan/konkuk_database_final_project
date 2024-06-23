@@ -3,6 +3,7 @@ import { postGetNumberMovieDatas } from "../functions"
 
 export const useGetInitDataHooks = () => {
   const [ movieDatas, setMovieDatase ] = useState([])
+  const [ totalNumbers, setTotalNumbers ] = useState(0)
   const backend_url = process.env.REACT_APP_GO_BACKEND_URL
   useEffect(() => { 
     const url = `${backend_url}/main/findalls`
@@ -10,7 +11,8 @@ export const useGetInitDataHooks = () => {
       try {
         const response = await postGetNumberMovieDatas(url, datas) 
         if (response) {
-          setMovieDatase(response)
+          setMovieDatase(response["send_datas"])
+          setTotalNumbers(response["total_numbers"])
         }
 
       } catch (err) {
@@ -26,5 +28,5 @@ export const useGetInitDataHooks = () => {
 
   }, [backend_url])
 
-  return { movieDatas, setMovieDatase }
+  return { movieDatas, setMovieDatase, totalNumbers, setTotalNumbers }
 }

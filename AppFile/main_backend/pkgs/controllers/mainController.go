@@ -11,10 +11,12 @@ import (
 
 func FindAllMovieDatas(ctx *gin.Context) {
 	var (
-		db         *sql.DB
-		body       *dtos.TableNumber
-		send_datas []dtos.MovieTable
-		err        error
+		db              *sql.DB
+		body            *dtos.TableNumber
+		send_datas      []dtos.MovieTable
+		command_comment string = `SELECT COUNT(*) AS "총갯수" FROM movies`
+		total_numbers   int
+		err             error
 	)
 
 	body, err = services.ParseAndCheckBody[dtos.TableNumber](ctx)
@@ -42,5 +44,16 @@ func FindAllMovieDatas(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, send_datas)
+	err = services.CountDataBase(db, &command_comment, &total_numbers)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"send_datas":    send_datas,
+		"total_numbers": total_numbers,
+	})
 }

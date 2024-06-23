@@ -1,6 +1,6 @@
 import { useFindMovieHook } from "../hooks"
 
-export const MovieForm = ({setMovieDatase}) => {
+export const MovieForm = ({setMovieDatase, setTotalNumbers}) => {
   const { register, handleSubmit, errors, onSubmit } = useFindMovieHook()
 
   return (

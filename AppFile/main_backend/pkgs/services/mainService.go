@@ -91,3 +91,19 @@ func GetDatas(db *sql.DB, body *dtos.TableNumber, send_datas *[]dtos.MovieTable)
 
 	return nil
 }
+
+func CountDataBase(db *sql.DB, command_comment *string, total_numbers *int) (err error) {
+	rows := db.QueryRow(*command_comment)
+	if err != nil {
+		fmt.Println("시스템 오류: ", err.Error())
+		return errors.New("특정 조건에 맞는 쿼리를 찾는데 오류가 발생했습니다")
+	}
+
+	if err = rows.Scan(total_numbers); err != nil {
+		fmt.Println("시스템 오류: ", err.Error())
+		return errors.New("총갯수를 읽는데 오류가 발생했습니다")
+	}
+
+	return nil
+
+}
