@@ -1,18 +1,16 @@
-import { useCheckNumberAndMakeNumberbox } from "../hooks"
+import { useCheckNumberAndMakeNumberbox, useClickNumberBoxHook } from "../hooks";
 
-
-export const Footer = ({totalNumbers}) => {
-  const { numberBox } = useCheckNumberAndMakeNumberbox(totalNumbers)
+export const Footer = ({ totalNumbers }) => {
+  const { maxNumbers, setMaxNumbers, numberBox, setNumberBox } = useCheckNumberAndMakeNumberbox(totalNumbers);
+  useClickNumberBoxHook(maxNumbers, setMaxNumbers, setNumberBox, totalNumbers)
 
   return (
-    <div className = "movieFooter">
-      {
-        numberBox.map((n, idx) => {
-          return (
-            <button key={idx}>{n}</button>
-          )
-        })
-      }
+    <div className="movieFooter">
+      <button className="leftNumberBtn">{"<-"}</button>
+      {numberBox.map((n, idx) => (
+        <button className="numberBtn" key={idx}>{n}</button>
+      ))}
+      <button className="rightNumberBtn">{"->"}</button>
     </div>
-  )
-}
+  );
+};

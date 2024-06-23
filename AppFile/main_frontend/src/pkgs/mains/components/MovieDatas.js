@@ -12,7 +12,7 @@ export const MovieData = ({ movieDatas }) => {
         <div className="movieTitle">감독</div>
         <div className="movieTitle">제작사</div>
       </div>
-      {movieDatas.map((movie, idx) => (
+      {movieDatas && movieDatas.length > 0 ? movieDatas.map((movie, idx) => (
         <div key={idx} className="movieValuesRow">
           <div className="movieValue">{movie["movie_name"]}</div>
           <div className="movieValue">{movie["movie_english_name"]["Valid"] && movie["movie_english_name"]["String"]}</div>
@@ -24,7 +24,7 @@ export const MovieData = ({ movieDatas }) => {
           <div className="movieValue">{movie["director"]["Valid"] && movie["director"]["String"]}</div>
           <div className="movieValue">{movie["production_company"]["Valid"] && movie["production_company"]["String"]}</div>
         </div>
-      ))}
+      )) : <div>검색 결과 없음</div>}
     </div>
   )
 }

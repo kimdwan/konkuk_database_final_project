@@ -108,3 +108,55 @@ form input[type="submit"]:hover {
     grid-template-columns: repeat(9, 1fr);
   }
 }
+
+/* Container for the footer */
+.movieFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Left and Right navigation buttons */
+.leftNumberBtn, .rightNumberBtn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.leftNumberBtn:hover, .rightNumberBtn:hover {
+  background-color: #0056b3;
+}
+
+/* Number buttons */
+.numberBtn {
+  background-color: #ffffff;
+  color: #007bff;
+  border: 1px solid #007bff;
+  padding: 10px 15px;
+  margin: 0 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.numberBtn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Active number button */
+.numberBtn.active {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #0056b3;
+}

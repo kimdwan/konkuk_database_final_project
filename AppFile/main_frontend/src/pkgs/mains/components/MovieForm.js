@@ -1,7 +1,7 @@
 import { useFindMovieHook } from "../hooks"
 
 export const MovieForm = ({setMovieDatase, setTotalNumbers}) => {
-  const { register, handleSubmit, errors, onSubmit } = useFindMovieHook()
+  const { register, handleSubmit, errors, onSubmit } = useFindMovieHook(setMovieDatase, setTotalNumbers)
 
   return (
     <div>

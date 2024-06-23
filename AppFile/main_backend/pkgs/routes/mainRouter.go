@@ -8,4 +8,5 @@ import (
 func MainRouter(router *gin.Engine) {
 	mainrouter := router.Group("main")
 	mainrouter.POST("findalls", controllers.FindAllMovieDatas)
+	mainrouter.POST("findtables", controllers.FindMovieTableWantPick)
 }

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 
 	_ "github.com/go-sql-driver/mysql"
 
@@ -14,7 +15,7 @@ import (
 	"github.com/kimdwan/konkuk_database_final_project/AppFile/main_backend/entities/dtos"
 )
 
-func ParseAndCheckBody[T dtos.TableNumber](ctx *gin.Context) (*T, error) {
+func ParseAndCheckBody[T dtos.TableNumber | dtos.FindMovieTableDto](ctx *gin.Context) (*T, error) {
 	var (
 		body T
 		err  error
@@ -94,8 +95,8 @@ func GetDatas(db *sql.DB, body *dtos.TableNumber, send_datas *[]dtos.MovieTable)
 
 func CountDataBase(db *sql.DB, command_comment *string, total_numbers *int) (err error) {
 	rows := db.QueryRow(*command_comment)
-	if err != nil {
-		fmt.Println("시스템 오류: ", err.Error())
+	if rows.Err() != nil {
+		fmt.Println("시스템 오류: ", rows.Err())
 		return errors.New("특정 조건에 맞는 쿼리를 찾는데 오류가 발생했습니다")
 	}
 
@@ -106,4 +107,80 @@ func CountDataBase(db *sql.DB, command_comment *string, total_numbers *int) (err
 
 	return nil
 
+}
+
+func FindWantMovieDatasService(db *sql.DB, body *dtos.FindMovieTableDto, send_datas *[]dtos.MovieTable, total_numbers *int) (err error) {
+	var (
+		find_text          string = "SELECT movie_name, movie_english_name, production_year, production_country, film_type, genre, production_status, director, production_company FROM movies"
+		where_text         string
+		find_total_numbers string = "SELECT COUNT(*) FROM movies"
+		args               []interface{}
+	)
+
+	var where_clauses []string
+
+	if body.Movie_name != "" {
+		where_clauses = append(where_clauses, "movie_name LIKE ?")
+		args = append(args, body.Movie_name+"%")
+	}
+	if body.Create_movie_year != 0 {
+		where_clauses = append(where_clauses, "production_year = ?")
+		args = append(args, body.Create_movie_year)
+	}
+	if body.Director != "" {
+		where_clauses = append(where_clauses, "director LIKE ?")
+		args = append(args, body.Director+"%")
+	}
+
+	if len(where_clauses) > 0 {
+		where_text = " WHERE " + strings.Join(where_clauses, " AND ")
+	}
+
+	find_text += where_text + " LIMIT 10;"
+	find_total_numbers += where_text
+
+	// Prepare the query for fetching movies
+	stmt, err := db.Prepare(find_text)
+	if err != nil {
+		fmt.Println("시스템 오류: ", err.Error())
+		return errors.New("쿼리 준비 중 오류가 발생했습니다")
+	}
+	defer stmt.Close()
+
+	// Execute the query
+	rows, err := stmt.Query(args...)
+	if err != nil {
+		fmt.Println("시스템 오류: ", err.Error())
+		return errors.New("해당 조건에 맞는 데이터를 찾는 중 오류가 발생했습니다")
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var send_data dtos.MovieTable
+		if err = rows.Scan(&send_data.Movie_name, &send_data.Movie_english_name, &send_data.Production_year, &send_data.Production_country, &send_data.Film_type, &send_data.Genre, &send_data.Production_status, &send_data.Director, &send_data.Production_company); err != nil {
+			fmt.Println("시스템 오류: ", err.Error())
+			return errors.New("쿼리 결과를 스캔하는 중 오류가 발생했습니다")
+		}
+		*send_datas = append(*send_datas, send_data)
+	}
+
+	if rows.Err() != nil {
+		fmt.Println("시스템 오류: ", rows.Err())
+		return errors.New("쿼리 결과 처리 중 오류가 발생했습니다")
+	}
+
+	// Query for total number of matching movies
+	stmtTotal, err := db.Prepare(find_total_numbers)
+	if err != nil {
+		fmt.Println("시스템 오류: ", err.Error())
+		return errors.New("총 갯수 쿼리 준비 중 오류가 발생했습니다")
+	}
+	defer stmtTotal.Close()
+
+	if err := stmtTotal.QueryRow(args...).Scan(total_numbers); err != nil {
+		fmt.Println("시스템 오류: ", err.Error())
+		return errors.New("총 갯수를 가져오는 중 오류가 발생했습니다")
+	}
+
+	return nil
 }

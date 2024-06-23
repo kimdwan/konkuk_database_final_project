@@ -57,3 +57,45 @@ func FindAllMovieDatas(ctx *gin.Context) {
 		"total_numbers": total_numbers,
 	})
 }
+
+func FindMovieTableWantPick(ctx *gin.Context) {
+	var (
+		body          *dtos.FindMovieTableDto
+		db            *sql.DB
+		send_datas    []dtos.MovieTable
+		total_numbers int
+		err           error
+	)
+
+	body, err = services.ParseAndCheckBody[dtos.FindMovieTableDto](ctx)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	db, err = services.ConnectDb()
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	defer db.Close()
+
+	err = services.FindWantMovieDatasService(db, body, &send_datas, &total_numbers)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"send_datas":    send_datas,
+		"total_numbers": total_numbers,
+	})
+
+}

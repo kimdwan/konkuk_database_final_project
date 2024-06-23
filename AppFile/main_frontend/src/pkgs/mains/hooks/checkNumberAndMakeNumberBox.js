@@ -31,5 +31,5 @@ export const useCheckNumberAndMakeNumberbox = (totalNumbers) => {
     
   }, [ totalNumbers, maxNumbers ])
 
-  return { numberBox }
+  return { maxNumbers, setMaxNumbers ,numberBox, setNumberBox }
 }

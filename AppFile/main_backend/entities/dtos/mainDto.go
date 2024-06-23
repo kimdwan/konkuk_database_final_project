@@ -17,3 +17,9 @@ type MovieTable struct {
 	Director           sql.NullString `json:"director"`
 	Production_company sql.NullString `json:"production_company"`
 }
+
+type FindMovieTableDto struct {
+	Movie_name        string `json:"movie_name" validate:"omitempty,max=255"`
+	Create_movie_year int64  `json:"create_movie_year" validate:"omitempty,number,min=1900"`
+	Director          string `json:"director" validate:"omitempty,max=255"`
+}
