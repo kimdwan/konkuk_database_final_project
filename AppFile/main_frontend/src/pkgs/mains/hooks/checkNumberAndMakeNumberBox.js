@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
-export const useCheckNumberAndMakeNumberbox = (totalNumbers) => {
-  const [ maxNumbers, setMaxNumbers ] = useState(100)
-  const [ numberBox, setNumberBox ] = useState([])
+export const useCheckNumberAndMakeNumberbox = (totalNumbers, setNumberBox, maxNumbers ,setMaxNumbers) => {
 
   useEffect(() => {
     if ( totalNumbers ) {
@@ -29,7 +27,6 @@ export const useCheckNumberAndMakeNumberbox = (totalNumbers) => {
       }
     }
     
-  }, [ totalNumbers, maxNumbers ])
+  }, [ totalNumbers, maxNumbers, setNumberBox, setMaxNumbers ])
 
-  return { maxNumbers, setMaxNumbers ,numberBox, setNumberBox }
 }

@@ -1,9 +1,12 @@
+import { useState } from "react"
 import { Footer, Information, MovieData, MovieForm } from "./components"
 import { useGetInitDataHooks } from "./hooks"
 import "./statics/Main.css"
 
 export const Main = () => {
   const { movieDatas, setMovieDatase, totalNumbers, setTotalNumbers } = useGetInitDataHooks()
+  const [ numberBox, setNumberBox ] = useState([])
+  const [ maxNumbers, setMaxNumbers ] = useState(100)
 
   return (
     <div>
@@ -14,7 +17,7 @@ export const Main = () => {
       <p />
 
       {/* 영화의 정보를 알기 위해서 사용되는 컴퍼넌트 */}
-      <MovieForm setMovieDatase = {setMovieDatase} setTotalNumbers = {setTotalNumbers} />
+      <MovieForm setMovieDatase = {setMovieDatase} setTotalNumbers = {setTotalNumbers} setMaxNumbers = {setMaxNumbers} />
 
       <p />
 
@@ -24,7 +27,7 @@ export const Main = () => {
       <p/>
 
       {/* 번호 판이 들어올 장소 */}
-      <Footer totalNumbers = {totalNumbers}/>
+      <Footer totalNumbers = {totalNumbers} numberBox={numberBox} setNumberBox = {setNumberBox} maxNumbers = {maxNumbers} setMaxNumbers = {setMaxNumbers} />
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { postGetMovieDataFetch } from "../functions";
 
-export const useFindMovieHook = (setMovieDatase, setTotalNumbers) => {
+export const useFindMovieHook = (setMovieDatase, setTotalNumbers, setMaxNumbers) => {
   const schema = yup.object({
     movie_name: yup.string().max(255, "영화 제목은 최대 255글자 입니다."),
     create_movie_year: yup
@@ -33,6 +33,7 @@ export const useFindMovieHook = (setMovieDatase, setTotalNumbers) => {
       if (response) {
         setMovieDatase(response["send_datas"])
         setTotalNumbers(response["total_numbers"])
+        setMaxNumbers(100)
       }
 
     } catch (err) {
